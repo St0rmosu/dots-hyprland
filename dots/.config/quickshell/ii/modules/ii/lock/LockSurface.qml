@@ -96,35 +96,6 @@ MouseArea {
     //     }
     // }
 
-    // Profile avatar
-    Rectangle {
-        id: avatarContainer
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-            bottom: mainIsland.top
-            bottomMargin: 24
-        }
-        width: 120
-        height: 120
-        radius: width / 2
-        color: Appearance.colors.colLayer2
-        border.width: 2
-        border.color: Appearance.colors.colPrimary
-
-        StyledImage {
-            id: avatarImage
-            anchors.fill: parent
-            anchors.margins: 6
-            source: "/home/lollo/Pictures/avatars/lello.jpg"
-            layer.enabled: true
-            layer.effect: OpacityMask {
-                maskSource: Circle {
-                    diameter: avatarImage.height
-                }
-            }
-        }
-    }
-
     // Main toolbar: password box
     Toolbar {
         id: mainIsland
@@ -274,6 +245,7 @@ MouseArea {
             Layout.leftMargin: 8
             icon: "account_circle"
             text: SystemInfo.username
+            avatarSource: "/home/lollo/Pictures/avatars/lello.jpg"
         }
 
         // Keyboard layout (Xkb)
@@ -381,14 +353,44 @@ MouseArea {
         required property string icon
         required property string text
         property color color: Appearance.colors.colOnSurfaceVariant
+        property string avatarSource: ""
 
         spacing: 4
         Layout.fillHeight: true
         Layout.leftMargin: 10
         Layout.rightMargin: 10
         
+        property int avatarSize: Math.round(Appearance.font.pixelSize.hugeass * 1.6)
+
+        Loader {
+            active: pair.avatarSource !== ""
+            visible: active
+            anchors.verticalCenter: parent.verticalCenter
+
+            sourceComponent: Rectangle {
+                width: pair.avatarSize
+                height: pair.avatarSize
+                radius: width / 2
+                color: Appearance.colors.colLayer2
+                border.width: 1
+                border.color: pair.color
+
+                StyledImage {
+                    anchors.fill: parent
+                    anchors.margins: 2
+                    source: pair.avatarSource
+                    layer.enabled: true
+                    layer.effect: OpacityMask {
+                        maskSource: Circle {
+                            diameter: width
+                        }
+                    }
+                }
+            }
+        }
 
         MaterialSymbol {
+            visible: pair.avatarSource === ""
             anchors.verticalCenter: parent.verticalCenter
             fill: 1
             text: pair.icon
