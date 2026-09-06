@@ -96,6 +96,35 @@ MouseArea {
     //     }
     // }
 
+    // Profile avatar
+    Rectangle {
+        id: avatarContainer
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            bottom: mainIsland.top
+            bottomMargin: 24
+        }
+        width: 120
+        height: 120
+        radius: width / 2
+        color: Appearance.colors.colLayer2
+        border.width: 2
+        border.color: Appearance.colors.colPrimary
+
+        StyledImage {
+            id: avatarImage
+            anchors.fill: parent
+            anchors.margins: 6
+            source: "/home/lollo/Pictures/avatars/lello.jpg"
+            layer.enabled: true
+            layer.effect: OpacityMask {
+                maskSource: Circle {
+                    diameter: avatarImage.height
+                }
+            }
+        }
+    }
+
     // Main toolbar: password box
     Toolbar {
         id: mainIsland
