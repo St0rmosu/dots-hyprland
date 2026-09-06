@@ -166,12 +166,13 @@ for i = 1, 2 do
     hl.bind("SUPER + " .. arrowkey[i], hl.dsp.focus({ direction = focusdir[i] }))
 end
 --#/# bind = SUPER + SHIFT, ←/↑/→/↓,, -- Move in direction
-for i = 1, 4 do
-    local arrowkey = { "Left", "Right", "Up", "Down" }
-    local focusdir = { "l", "r", "u", "d" }
-    hl.bind("SUPER + SHIFT + " .. arrowkey[i], hl.dsp.window.move({ direction = focusdir[i] }),
-        { description = "Window: Move " .. arrowkey[i] })
-end
+-- [custom] Super+Shift+frecce = resiza finestra (custom/keybinds.lua)
+-- for i = 1, 4 do
+--     local arrowkey = { "Left", "Right", "Up", "Down" }
+--     local focusdir = { "l", "r", "u", "d" }
+--     hl.bind("SUPER + SHIFT + " .. arrowkey[i], hl.dsp.window.move({ direction = focusdir[i] }),
+--         { description = "Window: Move " .. arrowkey[i] })
+-- end
 
 hl.bind("ALT + F4",
     function()
@@ -270,12 +271,13 @@ end
 
 --#/# bind = CTRL+SUPER, ←/→,, -- Focus left/right
 --#/# bind = CTRL+SUPER+ALT, ←/→,, -- # [hidden] Focus busy left/right
-for i = 1, 2 do
-    local keys = { "Left", "Right" }
-    local prefix = { "r-", "r+" }
-    local descdir = { "left", "right" }
-    hl.bind("CTRL + SUPER + " .. keys[i], hl.dsp.focus({ workspace = prefix[i] .. "1" }), {description = "Workspace: Focus " .. descdir[i]})
-end
+-- [custom] Super+Ctrl+frecce = move finestra (custom/keybinds.lua)
+-- for i = 1, 2 do
+--     local keys = { "Left", "Right" }
+--     local prefix = { "r-", "r+" }
+--     local descdir = { "left", "right" }
+--     hl.bind("CTRL + SUPER + " .. keys[i], hl.dsp.focus({ workspace = prefix[i] .. "1" }), {description = "Workspace: Focus " .. descdir[i]})
+-- end
 for i = 1, 2 do
     local keys = { "Left", "Right" }
     local prefix = { "m-", "m+" }
