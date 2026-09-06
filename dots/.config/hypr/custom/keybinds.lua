@@ -22,10 +22,10 @@ hl.bind("SUPER + SHIFT + T", hl.dsp.global("quickshell:focustimeToggle"), { desc
 -- ───────── Finestre ─────────
 hl.bind("CTRL + SHIFT + W", hl.dsp.window.close(), { description = "Window: Kill active" })
 hl.bind("SUPER + SHIFT + F", hl.dsp.window.float({ action = "toggle" }), { description = "Window: Toggle floating" })
-hl.bind("SUPER + SHIFT + Left", hl.dsp.exec_cmd("hyprctl dispatch resizeactive -50 0"), { repeating = true, description = "Window: Resize left" })
-hl.bind("SUPER + SHIFT + Right", hl.dsp.exec_cmd("hyprctl dispatch resizeactive 50 0"), { repeating = true, description = "Window: Resize right" })
-hl.bind("SUPER + SHIFT + Up", hl.dsp.exec_cmd("hyprctl dispatch resizeactive 0 -50"), { repeating = true, description = "Window: Resize up" })
-hl.bind("SUPER + SHIFT + Down", hl.dsp.exec_cmd("hyprctl dispatch resizeactive 0 50"), { repeating = true, description = "Window: Resize down" })
+hl.bind("SUPER + SHIFT + Left", hl.dsp.window.resize({ x = -50, y = 0, relative = true }), { repeating = true, description = "Window: Resize left" })
+hl.bind("SUPER + SHIFT + Right", hl.dsp.window.resize({ x = 50, y = 0, relative = true }), { repeating = true, description = "Window: Resize right" })
+hl.bind("SUPER + SHIFT + Up", hl.dsp.window.resize({ x = 0, y = -50, relative = true }), { repeating = true, description = "Window: Resize up" })
+hl.bind("SUPER + SHIFT + Down", hl.dsp.window.resize({ x = 0, y = 50, relative = true }), { repeating = true, description = "Window: Resize down" })
 hl.bind("SUPER + CTRL + Left", hl.dsp.window.move({ direction = "l" }), { description = "Window: Move left" })
 hl.bind("SUPER + CTRL + Right", hl.dsp.window.move({ direction = "r" }), { description = "Window: Move right" })
 hl.bind("SUPER + CTRL + Up", hl.dsp.window.move({ direction = "u" }), { description = "Window: Move up" })
@@ -36,9 +36,24 @@ hl.bind("SUPER + Up", hl.dsp.focus({ direction = "u" }), { description = "Window
 hl.bind("SUPER + Down", hl.dsp.focus({ direction = "d" }), { description = "Window: Focus down" })
 hl.bind("SUPER + M", hl.dsp.exec_cmd("hyprctl keyword general:layout $(hyprctl getoption general:layout -j | jq -r 'if .str == \"master\" then \"dwindle\" else \"master\" end')"), { description = "Window: Toggle layout" })
 
+hl.bind("SUPER + F11", function()
+    local active = hl.get_active_window()
+    if active.fullscreenClient == 2 then
+        hl.dispatch(hl.dsp.window.fullscreen_state({ internal = 0, client = 0 }))
+    else
+        hl.dispatch(hl.dsp.window.fullscreen_state({ internal = 0, client = 2 }))
+    end
+end, { description = "Window: Tiled full screen" })
+
 -- ───────── Monitor ─────────
-hl.bind("SUPER + Tab", hl.dsp.exec_cmd("~/.config/hypr/scripts/focus_next_monitor.sh"), { description = "Monitor: Focus next" })
-hl.bind("ALT + Tab", hl.dsp.focus({ direction = "r" }), { description = "Monitor: Focus right" })
+hl.bind("ALT + TAB", hl.dsp.focus({ last = true }))
+
+
+
+
+
+
+
 
 -- ───────── Workspace ─────────
 for i = 1, 10 do
