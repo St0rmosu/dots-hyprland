@@ -254,7 +254,7 @@ hl.animation({
 
 hl.config({
     input = {
-        kb_layout = "us",
+        kb_layout = "us,it",
         numlock_by_default = true,
         repeat_delay = 250,
         repeat_rate = 35,
