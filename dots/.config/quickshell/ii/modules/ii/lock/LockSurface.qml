@@ -368,6 +368,7 @@ MouseArea {
             anchors.verticalCenter: parent.verticalCenter
 
             sourceComponent: Rectangle {
+                id: avatarBg
                 width: pair.avatarSize
                 height: pair.avatarSize
                 radius: width / 2
@@ -376,13 +377,22 @@ MouseArea {
                 border.color: pair.color
 
                 StyledImage {
+                    id: avatarImg
                     anchors.fill: parent
                     anchors.margins: 2
                     source: pair.avatarSource
+                    fillMode: Image.PreserveAspectCrop
+                    fallbacks: [
+                        Directories.userAvatarPathAccountsService,
+                        Directories.userAvatarPathRicersAndWeirdSystems,
+                        Directories.userAvatarPathRicersAndWeirdSystems2
+                    ]
                     layer.enabled: true
                     layer.effect: OpacityMask {
                         maskSource: Circle {
-                            diameter: width
+                            diameter: avatarImg.width
+                            width: diameter
+                            height: diameter
                         }
                     }
                 }
