@@ -7,19 +7,21 @@ import Quickshell.Io;
 import QtQuick;
 
 /**
- * Simple to-do list manager.
+ * Simple to-do list manager with Google Tasks 2-way sync support.
  * Each item is an object with "content" and "done" properties.
  */
 Singleton {
     id: root
     property var filePath: Directories.todoPath
     property var list: []
-    
+    readonly property string syncScriptPath: Quickshell.env("HOME") + "/.config/google-tasks-sync/sync.sh"
+
     function addItem(item) {
         list.push(item)
         // Reassign to trigger onListChanged
         root.list = list.slice(0)
         todoFileView.setText(JSON.stringify(root.list))
+        triggerSync()
     }
 
     function addTask(desc) {
@@ -36,6 +38,7 @@ Singleton {
             // Reassign to trigger onListChanged
             root.list = list.slice(0)
             todoFileView.setText(JSON.stringify(root.list))
+            triggerSync()
         }
     }
 
@@ -45,6 +48,7 @@ Singleton {
             // Reassign to trigger onListChanged
             root.list = list.slice(0)
             todoFileView.setText(JSON.stringify(root.list))
+            triggerSync()
         }
     }
 
@@ -54,6 +58,7 @@ Singleton {
             // Reassign to trigger onListChanged
             root.list = list.slice(0)
             todoFileView.setText(JSON.stringify(root.list))
+            triggerSync()
         }
     }
 
@@ -61,8 +66,58 @@ Singleton {
         todoFileView.reload()
     }
 
+    function triggerSync() {
+        syncDebounce.restart()
+    }
+
+    Process {
+        id: syncProc
+        command: [root.syncScriptPath]
+        onExited: (exitCode, exitStatus) => {
+            if (exitCode === 0) {
+                root.refresh()
+            }
+        }
+    }
+
+    Timer {
+        id: syncDebounce
+        interval: 1000
+        repeat: false
+        onTriggered: {
+            if (!syncProc.running) {
+                syncProc.running = true
+            }
+        }
+    }
+
+    Timer {
+        id: periodicSyncTimer
+        interval: 60000
+        repeat: true
+        running: true
+        onTriggered: {
+            if (!syncProc.running) {
+                syncProc.running = true
+            }
+        }
+    }
+
+    IpcHandler {
+        target: "todoService"
+
+        function update(): void {
+            root.refresh()
+        }
+
+        function sync(): void {
+            root.triggerSync()
+        }
+    }
+
     Component.onCompleted: {
         refresh()
+        triggerSync()
     }
 
     FileView {
@@ -84,4 +139,3 @@ Singleton {
         }
     }
 }
-
