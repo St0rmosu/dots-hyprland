@@ -350,7 +350,7 @@ hl.bind("CTRL + SHIFT + ALT + SUPER + Delete", hl.dsp.exec_cmd("systemctl powero
 hl.bind("SUPER + Return", hl.dsp.exec_cmd(terminal), { description = "App: Terminal" })
 hl.bind("SUPER + T", hl.dsp.exec_cmd(terminal))
 hl.bind("CTRL + ALT + T", hl.dsp.exec_cmd(terminal))
--- [custom] Super+E = nautilus (custom/keybinds.lua)
+-- [custom] Super+E = hyprfm (custom/keybinds.lua)
 -- hl.bind("SUPER + E", hl.dsp.exec_cmd(fileManager), { description = "App: File manager" })
 hl.bind("SUPER + W", hl.dsp.global("quickshell:barToggle"), { description = "Shell: Toggle bar" })
 -- [custom] Super+C = clipboard (custom/keybinds.lua)

@@ -11,7 +11,7 @@ hl.bind("CTRL+SUPER+ALT+Slash", hl.dsp.exec_cmd("xdg-open ~/.config/hypr/custom/
 
 -- ───────── Applicazioni ─────────
 hl.bind("SUPER + Q", hl.dsp.exec_cmd("foot"), { description = "App: Terminal (foot)" })
-hl.bind("SUPER + E", hl.dsp.exec_cmd("nautilus"), { description = "App: File manager" })
+hl.bind("SUPER + E", hl.dsp.exec_cmd("hyprfm"), { description = "App: File manager" })
 hl.bind("SUPER + R", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/reload.sh"), { description = "App: Reload config" })
 hl.bind("SUPER + C", hl.dsp.global("quickshell:overviewClipboardToggle"), { description = "App: Clipboard" })
 hl.bind("ALT + Space", hl.dsp.global("quickshell:searchToggleRelease"), { description = "App: App launcher" })

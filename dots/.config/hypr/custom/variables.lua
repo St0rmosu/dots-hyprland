@@ -1,1 +1,1 @@
-
+fileManager = "hyprfm"
